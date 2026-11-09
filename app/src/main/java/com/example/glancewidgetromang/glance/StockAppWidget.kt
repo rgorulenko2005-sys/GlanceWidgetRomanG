@@ -3,6 +3,8 @@ package com.example.glancewidgetromang.glance
 import android.content.Context
 import androidx.glance.text.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.glance.GlanceId
@@ -82,12 +84,17 @@ class StockAppWidget : GlanceAppWidget() {
 
     @Composable
     fun GlanceContent() {
+        val stateCount by PriceDataRepo.currentPrice.collectAsState()
+        Small(stateCount)
+    }
+
+    @Composable
+    private fun Small(stateCount: Float) {
         Column(modifier = GlanceModifier
             .fillMaxSize()
             .background(GlanceTheme.colors.background)
-            .padding(8.dp)
-        ) {
-            Text("Demo")
+            .padding(8.dp)) {
+            StockDisplay(stateCount)
         }
     }
 }
